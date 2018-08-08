@@ -1,0 +1,34 @@
+{
+  "name": "001-title",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.babel.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edsonv/100-Days-CSS-Challenge.git"
+  },
+  "author": "Edson J Vargas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/edsonv/100-Days-CSS-Challenge/issues"
+  },
+  "homepage": "https://github.com/edsonv/100-Days-CSS-Challenge#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.1.0",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.24.6",
+    "css-mqpacker": "^7.0.0",
+    "cssnano": "^4.0.5",
+    "gulp": "^4.0.0",
+    "gulp-postcss": "^8.0.0",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-font-magician": "^2.2.1",
+    "postcss-import": "^12.0.0",
+    "stylelint": "^9.4.0"
+  },
+  "dependencies": {}
+}
