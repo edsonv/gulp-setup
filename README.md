@@ -36,6 +36,7 @@ $ npm i -D gulp-postcss
 ```
 
 Otros paquetes que podemos instalar para optimizar nuestro código CSS con PostCSS son:
+
 | Paquete | README |
 | ------- | ------ |
 | autoprefixer | [autoprefixer/README.md][PlAp] |
@@ -45,7 +46,6 @@ Otros paquetes que podemos instalar para optimizar nuestro código CSS con PostC
 | postcss-font-magician | [postcss-font-magician/README.md][PlFm] |
 | postcss-import | [postcss-import/README.md][PlIm] |
 | stylelint | [stylelint/README.md][PlSl] |
-
 
 Instalamos usando el siguiente comando:
 
@@ -91,11 +91,22 @@ import postcss from 'gulp-postcss'
 Luego agregamos las funciones que usará Gulp:
 
 ```javascript
+const paths = {
+  css: {
+    src: 'src/**/*.css',
+    dest: 'dist/'
+  },
+  html: {
+    src: 'src/*.html',
+    dest: 'dist/'
+  }
+}
+
 // Servidor de desarrollo
-const serve = (done) => {
+export const serve = (done) => {
   browserSync.init({
     server: {
-      baseDir: './dist'
+      baseDir: 'dist/'
     },
     port: 9000
   })
@@ -103,13 +114,13 @@ const serve = (done) => {
 }
 
 // Recarga del Navegador
-const reload = (done) => {
+export const reload = (done) => {
   browserSync.reload()
   done()
 }
 
 // Procesamiento de CSS
-const css = () => {
+export const css = () => {
   const processors = [
     atImport({
       plugins: [
@@ -122,44 +133,47 @@ const css = () => {
     }),
     magician({
       variants: {
-        'Lato': {
+        'Open Sans': {
           '300': [],
-          '400': []
+          '700': []
         }
       }
     }),
     CSSnext({
       features: {
         autoprefixer: {
-          grid: true,
-          flexbox: false,
+          // grid: true,
+          // flexbox: false,
+          browsers: [
+            '> 5%'
+          ]
         },
         customProperties: false,
         calc: false,
       }
     }),
     mqpacker(),
-    CSSnano()
+    // CSSnano()
   ]
 
-  return gulp
-    .src('./src/css/*.css')
-    .pipe(postcss(processors))
-    .pipe(gulp.dest('./dist/css'))
-    .pipe(browserSync.stream())
+  return (gulp
+      .src(paths.css.src)
+      .pipe(postcss(processors))
+      .pipe(gulp.dest(paths.css.dest))
+      .pipe(browserSync.stream()))
 }
 
 // Procesamiento de HTML
-const html = () => {
-  return gulp
-    .src('./src/*.html')
-    .pipe(gulp.dest('./dist'))
+export const html = () => {
+  return (gulp
+      .src(paths.html.src)
+      .pipe(gulp.dest(paths.html.dest)))
 }
 
 // Vigilar cambios
-const watch = () => {
-  gulp.watch('./src/*.html', gulp.series(html, reload))
-  gulp.watch('./src/**/*.css', gulp.series(css, reload))
+export const watch = () => {
+  gulp.watch(paths.html.src, gulp.series(html, reload))
+  gulp.watch(paths.css.src, gulp.series(css, reload))
 }
 ```
 
